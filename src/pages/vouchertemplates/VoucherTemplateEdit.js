@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import AppNavbar from "./AppNavBar";
+import AppNavbar from "../../AppNavBar";
 import {Button, Container} from "reactstrap";
 
-class VoucherRuleOthersEdit extends Component {
+class voucherTemplateEdit extends Component {
 
     emptyItem = {
-        otherRuleId: '',
-        ruleId: ''
+        templateId: '',
+        status: '',
+        templateName: '',
+        description: '',
+        formatTypeT: '',
+        formatType: '',
+        languageCode: '',
+        outputFormat: ''
     };
 
     constructor(props) {
@@ -21,8 +27,8 @@ class VoucherRuleOthersEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const voucherRuleOthers = await (await fetch(`/vouplaVoucherRulesOthers/${this.props.match.params.id}`)).json();
-            this.setState({item: voucherRuleOthers});
+            const voucherTemplate = await (await fetch(`/vouplaVoucherTemplate/${this.props.match.params.id}`)).json();
+            this.setState({item: voucherTemplate});
         }
     }
 
@@ -39,8 +45,8 @@ class VoucherRuleOthersEdit extends Component {
         event.preventDefault();
         const {item} = this.state;
 
-        await fetch('/vouplaVoucherRulesOthers' + (item.otherRuleId ? '/' + item.otherRuleId : ''), {
-            method: (item.otherRuleId) ? 'PUT' : 'POST',
+        await fetch('/vouplaVoucherTemplate' + (item.templateId ? '/' + item.templateId : ''), {
+            method: (item.templateId) ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -48,12 +54,12 @@ class VoucherRuleOthersEdit extends Component {
             },
             body: JSON.stringify(item),
         });
-        this.props.history.push('/vouplaVoucherRulesOthers');
+        this.props.history.push('/vouplaVoucherTemplate');
     }
 
     render() {
         const {item} = this.state;
-        const title = <h2>{item.ruleId ? 'Editing VoucherRuleOthers #' + item.ruleId : 'Adding VoucherRuleOthers'}</h2>;
+        const title = <h2>{item.templateId ? 'Editing voucherTemplate #' + item.templateId : 'Adding voucherTemplate'}</h2>;
 
         return (
                 <div>
@@ -61,7 +67,7 @@ class VoucherRuleOthersEdit extends Component {
                     <Container>
                         <div className="row mt-4 page-title">
                             <h3 className="col-md-8">{title}</h3>
-                            <Button color="warning" tag={Link} to="/voucherRulesOthers" className="col-md-3">Back to list</Button>
+                            <Button color="warning" tag={Link} to="/voucherTemplates" className="col-md-3">Back to list</Button>
                             <div className="col-md-1">&nbsp;</div>
                         </div>
                     </Container>
@@ -70,4 +76,4 @@ class VoucherRuleOthersEdit extends Component {
     }
 }
 
-export default withRouter(VoucherRuleOthersEdit);
+export default withRouter(voucherTemplateEdit);

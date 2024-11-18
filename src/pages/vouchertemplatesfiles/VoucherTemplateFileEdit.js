@@ -1,31 +1,16 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import AppNavbar from "./AppNavBar";
+import AppNavbar from "../../AppNavBar";
 import {Button, Container} from "reactstrap";
 
-class VoucherRuleEdit extends Component {
+class VoucherTemplateFileEdit extends Component {
 
     emptyItem = {
-        ruleId: '',
-        isActive: '',
-        isGeneral: '',
-        temporaryId: '',
-        application: '',
-        webpageId: '',
-        domain: '',
-        groupId: '',
-        incomingOfficeId: '',
-        supplierIncomingOffice: '',
-        bookingDateFrom: '',
-        bookingDateTo: '',
-        serviceDateFrom: '',
-        serviceDateTo: '',
-        productTypeId: '',
-        associatedCompanyId: '',
-        channelInterfaceId: '',
-        clientId: '',
-        agencyCode: '',
-        languageCode: ''
+        idTempFile: '',
+        templateId: '',
+        formatOut: 'HTML',
+        tempSourceT: '',
+        tempSource: ''
     };
 
     constructor(props) {
@@ -39,8 +24,8 @@ class VoucherRuleEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const voucherRule = await (await fetch(`/vouplaVoucherRules/${this.props.match.params.id}`)).json();
-            this.setState({item: voucherRule});
+            const voucherTemplateFile = await (await fetch(`/vouplaVoucherTemplateFile/${this.props.match.params.id}`)).json();
+            this.setState({item: voucherTemplateFile});
         }
     }
 
@@ -57,8 +42,8 @@ class VoucherRuleEdit extends Component {
         event.preventDefault();
         const {item} = this.state;
 
-        await fetch('/vouplaVoucherRules' + (item.ruleId ? '/' + item.ruleId : ''), {
-            method: (item.ruleId) ? 'PUT' : 'POST',
+        await fetch('/vouplaVoucherTemplateFile' + (item.idTempFile ? '/' + item.idTempFile : ''), {
+            method: (item.idTempFile) ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -66,12 +51,12 @@ class VoucherRuleEdit extends Component {
             },
             body: JSON.stringify(item),
         });
-        this.props.history.push('/vouplaVoucherRules');
+        this.props.history.push('/vouplaVoucherTemplateFile');
     }
 
     render() {
         const {item} = this.state;
-        const title = <h2>{item.ruleId ? 'Editing VoucherRule #' + item.ruleId : 'Adding VoucherRule'}</h2>;
+        const title = <h2>{item.idTempFile ? 'Editing voucherTemplateFile #' + item.idTempFile : 'Adding voucherTemplateFile'}</h2>;
 
         return (
                 <div>
@@ -79,7 +64,7 @@ class VoucherRuleEdit extends Component {
                     <Container>
                         <div className="row mt-4 page-title">
                             <h3 className="col-md-8">{title}</h3>
-                            <Button color="warning" tag={Link} to="/voucherRules" className="col-md-3">Back to list</Button>
+                            <Button color="warning" tag={Link} to="/voucherTemplateFiles" className="col-md-3">Back to list</Button>
                             <div className="col-md-1">&nbsp;</div>
                         </div>
                     </Container>
@@ -88,4 +73,4 @@ class VoucherRuleEdit extends Component {
     }
 }
 
-export default withRouter(VoucherRuleEdit);
+export default withRouter(VoucherTemplateFileEdit);

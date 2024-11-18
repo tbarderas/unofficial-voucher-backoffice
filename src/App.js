@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import './css/App.css';
 import Home from './Home';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import VoucherRulesList from './VoucherRulesList';
-import VoucherRuleEdit from "./VoucherRuleEdit";
-import VoucherTemplatesList from "./VoucherTemplatesList";
-import VoucherTemplateEdit from "./VoucherTemplateEdit";
-import VoucherRulesOthersList from "./VoucherRulesOthersList";
-import VoucherRuleOthersEdit from "./VoucherRuleOthersEdit";
-import VoucherTemplateFileEdit from "./VoucherTemplateFileEdit";
-import VoucherTemplateFilesList from "./VoucherTemplateFileList";
+import VoucherRulesList from './pages/voucherrules/VoucherRulesList';
+import VoucherRuleEdit from "./pages/voucherrules/VoucherRuleEdit";
+import VoucherTemplatesList from "./pages/vouchertemplates/VoucherTemplatesList";
+import VoucherTemplateEdit from "./pages/vouchertemplates/VoucherTemplateEdit";
+import VoucherRulesOthersList from "./pages/voucherrulesothers/VoucherRulesOthersList";
+import VoucherRuleOthersEdit from "./pages/voucherrulesothers/VoucherRuleOthersEdit";
+import VoucherTemplateFileEdit from "./pages/vouchertemplatesfiles/VoucherTemplateFileEdit";
+import VoucherTemplateFilesList from "./pages/vouchertemplatesfiles/VoucherTemplateFileList";
 
 class App extends Component {
   render() {

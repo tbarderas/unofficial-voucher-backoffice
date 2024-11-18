@@ -52,3 +52,14 @@
   border-width: 0.5em;
   text-decoration: underline;
 }
+
+.navbar-brand {
+  border-right: 1px solid white;
+  padding-right: 0.25em;
+}
+
+.navbar-brand:hover {
+  background-color: white;
+  color: black !important;
+  border-radius: 0.5em;
+}

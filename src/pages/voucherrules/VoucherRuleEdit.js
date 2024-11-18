@@ -1,19 +1,31 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import AppNavbar from "./AppNavBar";
+import AppNavbar from "../../AppNavBar";
 import {Button, Container} from "reactstrap";
 
-class voucherTemplateEdit extends Component {
+class VoucherRuleEdit extends Component {
 
     emptyItem = {
-        templateId: '',
-        status: '',
-        templateName: '',
-        description: '',
-        formatTypeT: '',
-        formatType: '',
-        languageCode: '',
-        outputFormat: ''
+        ruleId: '',
+        isActive: '',
+        isGeneral: '',
+        temporaryId: '',
+        application: '',
+        webpageId: '',
+        domain: '',
+        groupId: '',
+        incomingOfficeId: '',
+        supplierIncomingOffice: '',
+        bookingDateFrom: '',
+        bookingDateTo: '',
+        serviceDateFrom: '',
+        serviceDateTo: '',
+        productTypeId: '',
+        associatedCompanyId: '',
+        channelInterfaceId: '',
+        clientId: '',
+        agencyCode: '',
+        languageCode: ''
     };
 
     constructor(props) {
@@ -27,8 +39,8 @@ class voucherTemplateEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const voucherTemplate = await (await fetch(`/vouplaVoucherTemplate/${this.props.match.params.id}`)).json();
-            this.setState({item: voucherTemplate});
+            const voucherRule = await (await fetch(`/vouplaVoucherRules/${this.props.match.params.id}`)).json();
+            this.setState({item: voucherRule});
         }
     }
 
@@ -45,8 +57,8 @@ class voucherTemplateEdit extends Component {
         event.preventDefault();
         const {item} = this.state;
 
-        await fetch('/vouplaVoucherTemplate' + (item.templateId ? '/' + item.templateId : ''), {
-            method: (item.templateId) ? 'PUT' : 'POST',
+        await fetch('/vouplaVoucherRules' + (item.ruleId ? '/' + item.ruleId : ''), {
+            method: (item.ruleId) ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -54,20 +66,20 @@ class voucherTemplateEdit extends Component {
             },
             body: JSON.stringify(item),
         });
-        this.props.history.push('/vouplaVoucherTemplate');
+        this.props.history.push('/vouplaVoucherRules');
     }
 
     render() {
         const {item} = this.state;
-        const title = <h2>{item.templateId ? 'Editing voucherTemplate #' + item.templateId : 'Adding voucherTemplate'}</h2>;
+        const title = <h2>{item.ruleId ? 'Editing VoucherRule #' + item.ruleId : 'Adding VoucherRule'}</h2>;
 
         return (
                 <div>
                     <AppNavbar/>
                     <Container>
                         <div className="row mt-4 page-title">
-                            <h3 className="col-md-8">{title}</h3>
-                            <Button color="warning" tag={Link} to="/voucherTemplates" className="col-md-3">Back to list</Button>
+                            <h3 className="col-md-8">{title}{item.clone ? ' [ CLONING ]' : ''}</h3>
+                            <Button color="warning" tag={Link} to="/voucherRules" className="col-md-3">Back to list</Button>
                             <div className="col-md-1">&nbsp;</div>
                         </div>
                     </Container>
@@ -76,4 +88,4 @@ class voucherTemplateEdit extends Component {
     }
 }
 
-export default withRouter(voucherTemplateEdit);
+export default withRouter(VoucherRuleEdit);

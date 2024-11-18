@@ -17,11 +17,11 @@ class AppNavbar extends Component {
 
     render() {
         return <Navbar color="dark" dark expand="md">
-            <NavbarBrand tag={Link} to="/" className="m-1">Home</NavbarBrand>
-            <NavbarBrand tag={Link} to="/voucherRules" className="m-1">VoucherRules</NavbarBrand>
-            <NavbarBrand tag={Link} to="/voucherRulesOthers" className="m-1">VoucherRulesOthers</NavbarBrand>
-            <NavbarBrand tag={Link} to="/voucherTemplates" className="m-1">VoucherTemplates</NavbarBrand>
-            <NavbarBrand tag={Link} to="/voucherTemplateFiles" className="m-1">VoucherTemplateFiles</NavbarBrand>
+            <NavbarBrand tag={Link} to="/" className="m-1 ps-2 pe-2">Home</NavbarBrand>
+            <NavbarBrand tag={Link} to="/voucherRules" className="m-1 ps-2 pe-2">VoucherRules</NavbarBrand>
+            <NavbarBrand tag={Link} to="/voucherRulesOthers" className="m-1 ps-2 pe-2">VoucherRulesOthers</NavbarBrand>
+            <NavbarBrand tag={Link} to="/voucherTemplates" className="m-1 ps-2 pe-2">VoucherTemplates</NavbarBrand>
+            <NavbarBrand tag={Link} to="/voucherTemplateFiles" className="m-1 ps-2 pe-2">VoucherTemplateFiles</NavbarBrand>
         </Navbar>;
     }
 }
