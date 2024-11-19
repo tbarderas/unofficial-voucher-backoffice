@@ -43,7 +43,7 @@ class VoucherTemplateFilesList extends Component {
             return <tr key={voucherTemplateFile.idTempFile}>
                 <td>
                     <ItemActions
-                        urlPath="/voucherTemplateFile"
+                        urlPath="/voucherTemplateFiles"
                         itemId={voucherTemplateFile.idTempFile}
                     />
                 </td>

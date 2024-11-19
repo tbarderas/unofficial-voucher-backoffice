@@ -45,7 +45,7 @@ class VoucherTemplatesList extends Component {
             return <tr key={voucherTemplate.templateId}>
                 <td>
                     <ItemActions
-                        urlPath="/voucherTemplate"
+                        urlPath="/voucherTemplates"
                         itemId={voucherTemplate.templateId}
                     />
                 </td>
