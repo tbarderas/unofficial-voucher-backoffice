@@ -33,7 +33,7 @@ const VoucherRulesList = () => {
             <td>
                 <ItemActions
                     urlPath="/voucherRules"
-                    itemId={voucherRule.otherRuleId}
+                    itemId={voucherRule.ruleId}
                 />
             </td>
             <td>{voucherRule.ruleId}</td>
@@ -71,6 +71,7 @@ const VoucherRulesList = () => {
                     fetchUrl="/vouplaVoucherRules/search/customSearchWithFilter?sort=desc"
                     columns={columns}
                     renderRow={renderRow}
+                    dataObjectName="vouplaVoucherRules"
                 />
             </Container>
         </div>
