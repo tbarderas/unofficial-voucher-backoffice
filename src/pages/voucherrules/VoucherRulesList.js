@@ -59,11 +59,12 @@ const VoucherRulesList = () => {
     );
     return (
         <div>
-            <AppNavbar />
+            <AppNavbar/>
             <Container fluid>
                 <div className="row mt-4 page-title">
                     <h3 className="col-md-9">VoucherRules</h3>
-                    <Button color="success" tag={Link} to="/voucherRules/new" className="col-md-2">Add VoucherRule</Button>
+                    <Button color="success" tag={Link} to="/voucherRules/new" className="col-md-2">Add
+                        VoucherRule</Button>
                     <div className="col-md-1">&nbsp;</div>
                 </div>
                 <PaginatedTable
