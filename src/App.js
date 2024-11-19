@@ -19,10 +19,13 @@ class App extends Component {
             <Route path='/' exact={true} component={Home}/>
             <Route path='/voucherRules' exact={true} component={VoucherRulesList}/>
             <Route path='/voucherRules/:id' component={VoucherRuleEdit}/>
+
             <Route path='/voucherRulesOthers' exact={true} component={VoucherRulesOthersList}/>
             <Route path='/voucherRulesOthers/:id' component={VoucherRuleOthersEdit}/>
+
             <Route path='/voucherTemplates' exact={true} component={VoucherTemplatesList}/>
             <Route path='/voucherTemplates/:id' component={VoucherTemplateEdit}/>
+
             <Route path='/voucherTemplateFiles' exact={true} component={VoucherTemplateFilesList}/>
             <Route path='/voucherTemplateFiles/:id' component={VoucherTemplateFileEdit}/>
           </Switch>

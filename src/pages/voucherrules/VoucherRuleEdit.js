@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import AppNavbar from "../../AppNavBar";
+import AppNavbar from "../../components/AppNavBar";
 import {Button, Container} from "reactstrap";
 
 class VoucherRuleEdit extends Component {
