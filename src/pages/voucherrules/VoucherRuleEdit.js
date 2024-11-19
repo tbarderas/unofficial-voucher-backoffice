@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
-import {Button, Container} from "reactstrap";
+import {Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
 
 class VoucherRuleEdit extends Component {
 
@@ -48,14 +48,16 @@ class VoucherRuleEdit extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        let item = {...this.state.item};
+
+        let item = this.state.item;
         item[name] = value;
+
         this.setState({item});
     }
 
     async handleSubmit(event) {
         event.preventDefault();
-        const {item} = this.state;
+        const {item} = this.state.item;
 
         await fetch('/vouplaVoucherRules' + (item.ruleId ? '/' + item.ruleId : ''), {
             method: (item.ruleId) ? 'PUT' : 'POST',
@@ -82,6 +84,20 @@ class VoucherRuleEdit extends Component {
                             <Button color="warning" tag={Link} to="/voucherRules" className="col-md-3">Back to list</Button>
                             <div className="col-md-1">&nbsp;</div>
                         </div>
+
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup>
+                                <Label for="ruleId">RuleId</Label>
+                                <Input type="text" name="ruleId" id="ruleId"
+                                       value={item.ruleId || ''}
+                                       onChange={this.handleChange} autoComplete="ruleId"/>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Button color="primary" type="submit">Save</Button>{' '}
+                                <Button color="secondary" tag={Link} to="/voucherRules">Cancel</Button>
+                            </FormGroup>
+                        </Form>
                     </Container>
                 </div>
         );

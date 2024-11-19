@@ -63,3 +63,31 @@
   color: black !important;
   border-radius: 0.5em;
 }
+
+.form-group {
+  padding: 5px;
+  white-space: nowrap;
+}
+
+.form-group label {
+  float: left;
+  padding: 5px;
+  min-width: 15%;
+}
+
+.form-group .form-control {
+  width: 85%;
+  max-width: 85% !important;
+}
+
+.form-group.submit-line {
+  display: flex;
+  align-items: center;
+}
+
+.form-group.submit-line .btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+}
