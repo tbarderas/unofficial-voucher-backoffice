@@ -21,7 +21,37 @@ class VoucherRulesList extends Component {
 
     componentDidMount() {
         this.setState({voucherRules: [], pagination: this.state.pagination, isLoading: true});
-        fetch('/vouplaVoucherRules/search/customSearchWithFilter?sort=desc&page=' + this.state.pagination.self)
+        this.loadPage();
+    }
+
+    changePage(event) {
+        let currentPagination = this.state.pagination;
+        let targetPage = event.target.value;
+        let targetPageNumber = currentPagination.self;
+
+        if (targetPage === 'first') {
+            targetPageNumber = 0;
+        } else if (targetPage === 'last') {
+            targetPageNumber = currentPagination.last;
+        } else if (targetPage === 'next') {
+            targetPageNumber = currentPagination.next;
+        }
+
+        this.setState({
+            voucherRules: this.state.voucherRules,
+            pagination: {
+                self: targetPageNumber,
+                next: Math.min(targetPageNumber + 1, currentPagination.last),
+                last: currentPagination.last
+            },
+            isLoading: true
+        });
+        this.loadPage();
+    }
+
+    loadPage() {
+        let pageToLoad = this.state.pagination.self !== undefined ? '&page=' + this.state.pagination.self : '';
+        fetch('/vouplaVoucherRules/search/customSearchWithFilter?sort=desc' + pageToLoad)
             .then(response => response.json())
             .then(data => this.setState({
                 voucherRules: data["_embedded"]["vouplaVoucherRules"],
@@ -34,7 +64,7 @@ class VoucherRulesList extends Component {
     }
 
     render() {
-        const {voucherRules, isLoading} = this.state;
+        const {voucherRules, pagination, isLoading} = this.state;
 
         if (isLoading) {
             return <div className="col-md-12 align-content-center"><FadeLoader/></div>
@@ -93,10 +123,10 @@ class VoucherRulesList extends Component {
                         <div className="col-md-1">&nbsp;</div>
                     </div>
                     <div className="mt-12">
-                        <Button outline="true" color="dark" tag={Link} to="/voucherRules?page=0">First</Button>
-                        <Button outline="true" disabled="true" color="dark">Page {this.state.pagination.self}</Button>
-                        <Button outline="true" color="dark" tag={Link} to={"/voucherRules?page=" + this.state.pagination.next}>Next</Button>
-                        <Button outline="true" color="dark" tag={Link} to={"/voucherRules?page=" + this.state.pagination.last}>Last</Button>
+                        <Button outline={true} color="dark" value="first" onClick={e => {this.changePage(e);}}>First</Button>
+                        <Button outline={true} disabled="true" color="dark">Page {pagination.self}</Button>
+                        <Button outline={true} color="dark" value="next" onClick={e => {this.changePage(e);}}>Next</Button>
+                        <Button outline={true} color="dark" value="last" onClick={e => {this.changePage(e);}}>Last</Button>
                     </div>
                     <Table className="mt-4 table-condensed table-hover" striped bordered>
                         <thead>
