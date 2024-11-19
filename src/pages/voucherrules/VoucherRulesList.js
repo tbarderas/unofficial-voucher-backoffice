@@ -21,7 +21,7 @@ class VoucherRulesList extends Component {
 
     componentDidMount() {
         this.setState({voucherRules: [], pagination: this.state.pagination, isLoading: true});
-        this.loadPage();
+        this.loadPage(0);
     }
 
     changePage(event) {
@@ -31,6 +31,8 @@ class VoucherRulesList extends Component {
 
         if (targetPage === 'first') {
             targetPageNumber = 0;
+        } else if (targetPage === 'prev') {
+            targetPageNumber = Math.max(0, currentPagination.self - 1);
         } else if (targetPage === 'last') {
             targetPageNumber = currentPagination.last;
         } else if (targetPage === 'next') {
@@ -46,12 +48,14 @@ class VoucherRulesList extends Component {
             },
             isLoading: true
         });
-        this.loadPage();
+        console.log('targetPage:' + targetPage + ' - pagination.self:' + targetPageNumber);
+        this.loadPage(targetPageNumber);
     }
 
-    loadPage() {
-        let pageToLoad = this.state.pagination.self !== undefined ? '&page=' + this.state.pagination.self : '';
-        fetch('/vouplaVoucherRules/search/customSearchWithFilter?sort=desc' + pageToLoad)
+    loadPage(pageToLoad) {
+        let pageFilter = pageToLoad !== 0 ? '&page=' + pageToLoad : '';
+        console.log('loading page:' + pageToLoad + ' - using filter: ' + pageFilter);
+        fetch('/vouplaVoucherRules/search/customSearchWithFilter?sort=desc' + pageFilter)
             .then(response => response.json())
             .then(data => this.setState({
                 voucherRules: data["_embedded"]["vouplaVoucherRules"],
@@ -123,10 +127,11 @@ class VoucherRulesList extends Component {
                         <div className="col-md-1">&nbsp;</div>
                     </div>
                     <div className="mt-12">
-                        <Button outline={true} color="dark" value="first" onClick={e => {this.changePage(e);}}>First</Button>
-                        <Button outline={true} disabled={true} color="dark">Page {pagination.self}</Button>
-                        <Button outline={true} color="dark" value="next" onClick={e => {this.changePage(e);}}>Next</Button>
-                        <Button outline={true} color="dark" value="last" onClick={e => {this.changePage(e);}}>Last</Button>
+                        <Button outline={true} color="dark"  disabled={pagination.self === 0}value="first" onClick={e => {this.changePage(e);}}>First</Button>
+                        <Button outline={true} color="dark"  disabled={pagination.self === 0}value="prev" onClick={e => {this.changePage(e);}}>Prev.</Button>
+                        <Button outline={true} disabled={true} color="dark">Page {pagination.self + 1} of {pagination.last + 1}</Button>
+                        <Button outline={true} color="dark" disabled={pagination.next >= pagination.last} value="next" onClick={e => {this.changePage(e);}}>Next</Button>
+                        <Button outline={true} color="dark" disabled={pagination.self === pagination.last} value="last" onClick={e => {this.changePage(e);}}>Last</Button>
                     </div>
                     <Table className="mt-4 table-condensed table-hover" striped bordered>
                         <thead>
