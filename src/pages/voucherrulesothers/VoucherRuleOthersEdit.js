@@ -7,7 +7,16 @@ class VoucherRuleOthersEdit extends Component {
 
     emptyItem = {
         otherRuleId: '',
-        ruleId: ''
+        ruleId: '',
+        activityTypeId: '',
+        associatedCompanyId: '',
+        serviceId: '',
+        modalityId: '',
+        supplierCarId: '',
+        cmdId: '',
+        categoryId: '',
+        cmdGdsId: '',
+        activityIntegrationId: ''
     };
 
     constructor(props) {
