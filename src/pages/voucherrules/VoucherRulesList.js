@@ -1,8 +1,10 @@
 import React from 'react';
-import {Container, Button, ButtonGroup} from 'reactstrap';
-import { Link } from 'react-router-dom';
+import {Button, Container} from 'reactstrap';
+import {Link} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import PaginatedTable from "../../components/PaginatedTable";
+import ItemActions from "../../components/ItemActions";
+
 const VoucherRulesList = () => {
     const columns = [
         { label: "Actions"},
@@ -29,14 +31,10 @@ const VoucherRulesList = () => {
     const renderRow = (voucherRule) => (
         <tr key={voucherRule.ruleId}>
             <td>
-                <ButtonGroup>
-                    <Button size="sm" color="primary" tag={Link} to={`/voucherRules/${voucherRule.ruleId}`}>
-                        Edit
-                    </Button>
-                    <Button size="sm" color="info" tag={Link} to={`/voucherRules/${voucherRule.ruleId}?clone`}>
-                        Clone
-                    </Button>
-                </ButtonGroup>
+                <ItemActions
+                    urlPath="/voucherRules"
+                    itemId={voucherRule.otherRuleId}
+                />
             </td>
             <td>{voucherRule.ruleId}</td>
             <td className="text-center">{voucherRule.isActive ? 'Y' : 'N'}</td>
