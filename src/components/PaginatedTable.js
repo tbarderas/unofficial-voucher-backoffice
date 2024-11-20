@@ -2,14 +2,14 @@ import React, {memo, useEffect, useState} from 'react';
 import {Button, Table} from 'reactstrap';
 import {FadeLoader} from 'react-spinners';
 
-const PaginatedTable = memo(({ fetchUrl, columns, renderRow, dataObjectName }) => {
+const PaginatedTable = memo(({ columns, renderRow, dataObjectName }) => {
     const [data, setData] = useState([]);
     const [pagination, setPagination] = useState({ self: 0, next: 0, last: 0 });
     const [isLoading, setIsLoading] = useState(false);
     const loadPage = async (page) => {
         setIsLoading(true);
         try {
-            const response = await fetch(`${fetchUrl}&page=${page}`);
+            const response = await fetch(`/${dataObjectName}/search/customSearchWithFilter?sort=desc&page=${page}`);
             const result = await response.json();
             setData(result["_embedded"][dataObjectName] || []);
             setPagination({
@@ -23,16 +23,18 @@ const PaginatedTable = memo(({ fetchUrl, columns, renderRow, dataObjectName }) =
             setIsLoading(false);
         }
     };
+
     useEffect(() => {
-        loadPage(0); // Initial load
-    }, [fetchUrl]);
+        loadPage(0).then(r => console.log('Page 0 loaded')); // Initial load
+    }, [])  // eslint-disable-line react-hooks/exhaustive-deps
+
     const changePage = (direction) => {
         let targetPage = pagination.self;
         if (direction === 'first') targetPage = 0;
         else if (direction === 'prev') targetPage = Math.max(0, pagination.self - 1);
         else if (direction === 'next') targetPage = Math.min(pagination.next, pagination.last);
         else if (direction === 'last') targetPage = pagination.last;
-        if (targetPage !== pagination.self) loadPage(targetPage);
+        if (targetPage !== pagination.self) loadPage(targetPage).then((targetPage) => console.log('Page ' + targetPage + 'loaded'));
     };
     if (isLoading) {
         return <div className="col-md-12 align-content-center"><FadeLoader /></div>;

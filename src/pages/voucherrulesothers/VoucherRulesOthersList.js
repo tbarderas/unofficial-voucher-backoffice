@@ -51,7 +51,6 @@ const VoucherRulesList = () => {
                     <div className="col-md-1">&nbsp;</div>
                 </div>
                 <PaginatedTable
-                    fetchUrl="/vouplaVoucherRulesOthers/search/customSearchWithFilter?sort=desc"
                     columns={columns}
                     renderRow={renderRow}
                     dataObjectName="vouplaVoucherRulesOthers"
