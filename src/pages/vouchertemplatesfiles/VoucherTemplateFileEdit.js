@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
-import {Button, Container} from "reactstrap";
+import {Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
 
 class VoucherTemplateFileEdit extends Component {
 
@@ -33,7 +33,7 @@ class VoucherTemplateFileEdit extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        let item = {...this.state.item};
+        let item = this.state.item;
         item[name] = value;
         this.setState({item});
     }
@@ -51,7 +51,7 @@ class VoucherTemplateFileEdit extends Component {
             },
             body: JSON.stringify(item),
         });
-        this.props.history.push('/vouplaVoucherTemplateFile');
+        this.props.history.push('/voucherTemplateFiles');
     }
 
     render() {
@@ -67,6 +67,41 @@ class VoucherTemplateFileEdit extends Component {
                             <Button color="warning" tag={Link} to="/voucherTemplateFiles" className="col-md-3">Back to list</Button>
                             <div className="col-md-1">&nbsp;</div>
                         </div>
+
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup>
+                                <Label for="templateId">Template ID</Label>
+                                <Input type="text" name="templateId" id="templateId"
+                                       value={item.templateId || ''}
+                                       onChange={this.handleChange}/>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Label for="formatOut">Format out</Label>
+                                <Input type="text" name="formatOut" id="formatOut"
+                                       value={item.formatOut || ''}
+                                       onChange={this.handleChange} autoComplete="formatOut"/>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Label for="tempSourceT">Temp source T</Label>
+                                <Input type="textarea" name="tempSourceT" id="tempSourceT" rows="5"
+                                       value={item.tempSourceT || ''}
+                                       onChange={this.handleChange}/>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Label for="tempSource">Temp source</Label>
+                                <Input type="textarea" name="tempSource" id="tempSource" rows="5"
+                                       value={item.tempSource || ''}
+                                       onChange={this.handleChange}/>
+                            </FormGroup>
+
+                            <FormGroup className="submit-line">
+                                <Button color="primary" type="submit">Save</Button>{' '}
+                                <Button color="secondary" tag={Link} to="/voucherTemplateFiles">Cancel</Button>
+                            </FormGroup>
+                        </Form>
                     </Container>
                 </div>
         );

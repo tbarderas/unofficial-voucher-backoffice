@@ -1,5 +1,5 @@
 {
-  "name": "unofficial-vouchers-backoffice",
+  "name": "vouchers-local-backoffice",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
