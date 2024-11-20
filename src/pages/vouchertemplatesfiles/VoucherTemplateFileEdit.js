@@ -31,8 +31,9 @@ class VoucherTemplateFileEdit extends Component {
 
     handleChange(event) {
         const target = event.target;
-        const value = target.value;
         const name = target.name;
+        const b64encoded = name === 'tempSource' || name === 'tempSourceT';
+        const value = b64encoded ? btoa(target.value) : target.value;
         let item = this.state.item;
         item[name] = value;
         this.setState({item});
@@ -84,17 +85,21 @@ class VoucherTemplateFileEdit extends Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label for="tempSourceT">Temp source T</Label>
-                                <Input type="textarea" name="tempSourceT" id="tempSourceT" rows="5"
-                                       value={item.tempSourceT || ''}
-                                       onChange={this.handleChange}/>
-                            </FormGroup>
+                                <FormGroup className="col-md-6 half-column">
+                                    <Label for="tempSourceT">Temp source T</Label>
+                                    <Input type="textarea" name="tempSourceT" id="tempSourceT" rows="25"
+                                           className="compact-text"
+                                           value={atob(item.tempSourceT) || ''}
+                                           onChange={this.handleChange}/>
+                                </FormGroup>
 
-                            <FormGroup>
-                                <Label for="tempSource">Temp source</Label>
-                                <Input type="textarea" name="tempSource" id="tempSource" rows="5"
-                                       value={item.tempSource || ''}
-                                       onChange={this.handleChange}/>
+                                <FormGroup className="col-md-6 half-column">
+                                    <Label for="tempSource">Temp source</Label>
+                                    <Input type="textarea" name="tempSource" id="tempSource" rows="25"
+                                           className="compact-text"
+                                           value={atob(item.tempSource) || ''}
+                                           onChange={this.handleChange}/>
+                                </FormGroup>
                             </FormGroup>
 
                             <FormGroup className="submit-line">
