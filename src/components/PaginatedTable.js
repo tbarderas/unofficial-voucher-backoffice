@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import { Button, Table } from 'reactstrap';
 import { FadeLoader } from 'react-spinners';
-const PaginatedTable = memo(({ fetchUrl, columns, renderRow }) => {
+const PaginatedTable = memo(({ fetchUrl, columns, renderRow,pageName }) => {
     const [data, setData] = useState([]);
     const [pagination, setPagination] = useState({ self: 0, next: 0, last: 0 });
     const [isLoading, setIsLoading] = useState(false);
@@ -10,8 +10,7 @@ const PaginatedTable = memo(({ fetchUrl, columns, renderRow }) => {
         try {
             const response = await fetch(`${fetchUrl}&page=${page}`);
             const result = await response.json();
-            // TODO hacer esto dinámico
-            setData(result["_embedded"]["vouplaVoucherRules"] || []);
+            setData(result["_embedded"][`${pageName}`] || []);
             setPagination({
                 self: result["page"]["number"],
                 next: Math.min(result["page"]["number"] + 1, result["page"]["totalPages"] - 1),

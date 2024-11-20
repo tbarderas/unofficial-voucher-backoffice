@@ -83,6 +83,7 @@ const VoucherRulesList = () => {
                     fetchUrl="/vouplaVoucherRules/search/customSearchWithFilter?sort=desc"
                     columns={columns}
                     renderRow={renderRow}
+                    pageName="vouplaVoucherRules"
                 />
             </Container>
         </div>
