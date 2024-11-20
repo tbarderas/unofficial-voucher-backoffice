@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import { Button, Table } from 'reactstrap';
 import { FadeLoader } from 'react-spinners';
-const PaginatedTable = memo(({ fetchUrl, columns, renderRow }) => {
+const PaginatedTable = memo(({ fetchUrl, columns, renderRow, dataObjectName }) => {
     const [data, setData] = useState([]);
     const [pagination, setPagination] = useState({ self: 0, next: 0, last: 0 });
     const [isLoading, setIsLoading] = useState(false);
