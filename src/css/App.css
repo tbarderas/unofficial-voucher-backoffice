@@ -103,7 +103,10 @@
   width: 25%;
 }
 
-textarea.compact-text {
-  font-size: x-small;
+textarea.form-control {
   resize: none;
+}
+
+textarea.form-control.compact-text {
+  font-size: x-small;
 }

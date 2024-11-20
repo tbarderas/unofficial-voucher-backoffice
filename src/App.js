@@ -10,6 +10,8 @@ import VoucherRulesOthersList from "./pages/voucherrulesothers/VoucherRulesOther
 import VoucherRuleOthersEdit from "./pages/voucherrulesothers/VoucherRuleOthersEdit";
 import VoucherTemplateFileEdit from "./pages/vouchertemplatesfiles/VoucherTemplateFileEdit";
 import VoucherTemplateFilesList from "./pages/vouchertemplatesfiles/VoucherTemplateFileList";
+import VoucherLabelsList from "./pages/voucherlabels/VoucherLabelsList";
+import VoucherLabelsEdit from "./pages/voucherlabels/VoucherLabelsEdit";
 
 class App extends Component {
   render() {
@@ -28,6 +30,9 @@ class App extends Component {
 
             <Route path='/voucherTemplateFiles' exact={true} component={VoucherTemplateFilesList}/>
             <Route path='/voucherTemplateFiles/:id' component={VoucherTemplateFileEdit}/>
+
+            <Route path='/voucherLabels' exact={true} component={VoucherLabelsList}/>
+            <Route path='/voucherLabels/:id' component={VoucherLabelsEdit}/>
           </Switch>
         </Router>
     )
