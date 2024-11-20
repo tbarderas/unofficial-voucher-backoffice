@@ -62,7 +62,7 @@ class VoucherRuleOthersEdit extends Component {
 
     render() {
         const {item} = this.state;
-        const title = <h2>{item.ruleId ? 'Editing VoucherRuleOthers #' + item.ruleId : 'Adding VoucherRuleOthers'}</h2>;
+        const title = <h2>{item.otherRuleId ? 'Editing VoucherRuleOthers #' + item.otherRuleId : 'Adding VoucherRuleOthers'}</h2>;
 
         return (
                 <div>
