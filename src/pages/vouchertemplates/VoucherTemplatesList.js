@@ -70,10 +70,10 @@ class VoucherTemplatesList extends Component {
                         <div className="col-md-1">&nbsp;</div>
                     </div>
                     <div className="mt-12">
-                        <Button outline={true} color="dark" tag={Link} to="/voucherRules?page=0">First</Button>
+                        <Button outline={true} color="dark" tag={Link} to="/voucherTemplates?page=0">First</Button>
                         <Button outline={true} disabled={true} color="dark">Page {this.state.pagination.self}</Button>
-                        <Button outline={true} color="dark" tag={Link} to={"/voucherRules?page=" + this.state.pagination.next}>Next</Button>
-                        <Button outline={true} color="dark" tag={Link} to={"/voucherRules?page=" + this.state.pagination.last}>Last</Button>
+                        <Button outline={true} color="dark" tag={Link} to={"/voucherTemplates?page=" + this.state.pagination.next}>Next</Button>
+                        <Button outline={true} color="dark" tag={Link} to={"/voucherTemplates?page=" + this.state.pagination.last}>Last</Button>
                     </div>
                     <Table className="mt-4 table-condensed table-hover" striped bordered>
                         <thead>
