@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './css/App.css';
-import Home from './Home';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import VoucherRulesList from './pages/voucherrules/VoucherRulesList';
 import VoucherRuleEdit from "./pages/voucherrules/VoucherRuleEdit";
@@ -18,7 +17,7 @@ class App extends Component {
     return (
         <Router>
           <Switch>
-            <Route path='/' exact={true} component={Home}/>
+            <Route path='/' exact={true} component={VoucherRulesList}/>
             <Route path='/voucherRules' exact={true} component={VoucherRulesList}/>
             <Route path='/voucherRules/:id' component={VoucherRuleEdit}/>
 

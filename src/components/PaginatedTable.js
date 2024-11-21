@@ -1,5 +1,5 @@
-import React, {memo, useEffect, useState} from 'react';
-import {Button, Table} from 'reactstrap';
+import React, {memo, useEffect, useRef, useState} from 'react';
+import {Button, ButtonGroup, Input, Table} from 'reactstrap';
 import {FadeLoader} from 'react-spinners';
 import ItemActions from "./ItemActions";
 
@@ -49,12 +49,19 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
         loadPage(0).then(r => console.log('Page 0 loaded')); // Initial load
     }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
+    const goToPageInput = useRef();
+
+    const goToPage = () => {
+        changePage(goToPageInput.current.value);
+    }
+
     const changePage = (direction) => {
         let targetPage = pagination.self;
         if (direction === 'first') targetPage = 0;
         else if (direction === 'prev') targetPage = Math.max(0, pagination.self - 1);
         else if (direction === 'next') targetPage = Math.min(pagination.next, pagination.last);
         else if (direction === 'last') targetPage = pagination.last;
+        else if (direction >= 1 && direction <= pagination.last + 1) targetPage = direction - 1
         if (targetPage !== pagination.self) loadPage(targetPage).then((targetPage) => console.log('Page ' + targetPage + 'loaded'));
     };
     if (isLoading) {
@@ -63,11 +70,18 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
     return (
         <div>
             <div className="pagination-controls mt-12">
-                <Button outline color="dark" onClick={() => changePage('first')}>First</Button>
-                <Button outline color="dark" onClick={() => changePage('prev')} disabled={pagination.self === 0}>Prev.</Button>
-                <Button outline color="dark" disabled>Page {pagination.self + 1} of {pagination.last + 1}</Button>
-                <Button outline color="dark" onClick={() => changePage('next')} disabled={pagination.next >= pagination.last}>Next</Button>
-                <Button outline color="dark" onClick={() => changePage('last')} disabled={pagination.self === pagination.last}>Last</Button>
+                <ButtonGroup>
+                    <Button outline color="dark" onClick={() => changePage('first')}>First</Button>
+                    <Button outline color="dark" onClick={() => changePage('prev')} disabled={pagination.self === 0}>Prev.</Button>
+                    <Button outline color="dark" disabled style={{whiteSpace: "nowrap"}}>Page {pagination.self + 1} of {pagination.last + 1}</Button>
+                    <Button outline color="dark" onClick={() => changePage('next')} disabled={pagination.next >= pagination.last}>Next</Button>
+                    <Button outline color="dark" onClick={() => changePage('last')} disabled={pagination.self === pagination.last}>Last</Button>
+
+                    <div className="col-md-1">&nbsp;</div>
+                    <Input type="text" ref={goToPageInput} placeholder={"page to go"}/>
+                    <Button color="info" onClick={goToPage} style={{whiteSpace: "nowrap"}}>Go to page</Button>
+
+                </ButtonGroup>
             </div>
             <Table className="mt-4 table-condensed table-hover" striped bordered>
                 <thead>
