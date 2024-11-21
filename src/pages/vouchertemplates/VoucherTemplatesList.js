@@ -21,8 +21,8 @@ const VoucherTemplatesList = () => {
         <tr key={voucherTemplate.ruleId}>
             <td>
                 <ItemActions
-                    urlPath="/vouplaVoucherTemplate"
-                    itemId={voucherTemplate.ruleId}
+                    urlPath="/voucherTemplates"
+                    itemId={voucherTemplate.templateId}
                 />
             </td>
             <td style={{whiteSpace: 'nowrap'}}>{voucherTemplate.templateId}</td>

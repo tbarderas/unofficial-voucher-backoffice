@@ -16,8 +16,8 @@ const VoucherTemplateFilesList = () => {
         <tr key={voucherTemplateFile.otherRuleId}>
             <td>
                 <ItemActions
-                    urlPath="/voucherRulesOthers"
-                    itemId={voucherTemplateFile.otherRuleId}
+                    urlPath="/voucherTemplateFiles"
+                    itemId={voucherTemplateFile.idTempFile}
                 />
             </td>
             <td style={{whiteSpace: 'nowrap'}}>{voucherTemplateFile.idTempFile}</td>

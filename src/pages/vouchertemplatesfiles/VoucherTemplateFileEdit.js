@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
-import {Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
+import {Container} from "reactstrap";
+import VoucherItemForm from "../../components/VoucherItemForm";
 
 class VoucherTemplateFileEdit extends Component {
 
@@ -58,6 +59,20 @@ class VoucherTemplateFileEdit extends Component {
     render() {
         const {item} = this.state;
         const title = <h2>{item.idTempFile ? 'Editing voucherTemplateFile #' + item.idTempFile : 'Adding voucherTemplateFile'}</h2>;
+        const columns = [
+            { field: 'templateId', label: 'Template ID'},
+            { field: 'formatOut', label: 'Format Out'},
+            {
+                field: 'tempSourceT', label: 'Temp SourceT',
+                className: "col-md-6 half-column", type: 'textarea', rows: 25,
+                inputClass: 'compact-text', valueRender: atob
+            },
+            {
+                field: 'tempSource', label: 'Temp Source',
+                className: "col-md-6 half-column", type: 'textarea', rows: 25,
+                inputClass: 'compact-text', valueRender: atob
+            }
+        ]
 
         return (
                 <div>
@@ -68,44 +83,13 @@ class VoucherTemplateFileEdit extends Component {
                             <div className="col-md-1">&nbsp;</div>
                         </div>
 
-                        <Form onSubmit={this.handleSubmit}>
-                            <FormGroup>
-                                <Label for="templateId">Template ID</Label>
-                                <Input type="text" name="templateId" id="templateId"
-                                       value={item.templateId || ''}
-                                       onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="formatOut">Format out</Label>
-                                <Input type="text" name="formatOut" id="formatOut"
-                                       value={item.formatOut || ''}
-                                       onChange={this.handleChange} autoComplete="formatOut"/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <FormGroup className="col-md-6 half-column">
-                                    <Label for="tempSourceT">Temp source T</Label>
-                                    <Input type="textarea" name="tempSourceT" id="tempSourceT" rows="25"
-                                           className="compact-text"
-                                           value={atob(item.tempSourceT) || ''}
-                                           onChange={this.handleChange}/>
-                                </FormGroup>
-
-                                <FormGroup className="col-md-6 half-column">
-                                    <Label for="tempSource">Temp source</Label>
-                                    <Input type="textarea" name="tempSource" id="tempSource" rows="25"
-                                           className="compact-text"
-                                           value={atob(item.tempSource) || ''}
-                                           onChange={this.handleChange}/>
-                                </FormGroup>
-                            </FormGroup>
-
-                            <FormGroup className="submit-line">
-                                <Button color="primary" type="submit">Save</Button>{' '}
-                                <Button color="secondary" tag={Link} to="/voucherTemplateFiles">Cancel</Button>
-                            </FormGroup>
-                        </Form>
+                        <VoucherItemForm
+                            entityName="voucherTemplateFiles"
+                            item={item}
+                            columns={columns}
+                            handleChange={this.handleChange}
+                            handleSubmit={this.handleSubmit}
+                        />
                     </Container>
                 </div>
         );

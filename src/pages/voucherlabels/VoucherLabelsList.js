@@ -20,7 +20,7 @@ const VoucherLabelsList = () => {
             <td>
                 <ItemActions
                     urlPath="/voucherLabels"
-                    itemId={voucherLabel.otherRuleId}
+                    itemId={voucherLabel.labelId}
                 />
             </td>
             <td style={{whiteSpace: 'nowrap'}}>{voucherLabel.labelId}</td>

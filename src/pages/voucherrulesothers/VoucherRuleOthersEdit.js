@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
-import {Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
+import {Container} from "reactstrap";
+import VoucherItemForm from "../../components/VoucherItemForm";
 
 class VoucherRuleOthersEdit extends Component {
 
@@ -63,6 +64,18 @@ class VoucherRuleOthersEdit extends Component {
     render() {
         const {item} = this.state;
         const title = <h2>{item.otherRuleId ? 'Editing VoucherRuleOthers #' + item.otherRuleId : 'Adding VoucherRuleOthers'}</h2>;
+        const columns = [
+            { field: 'ruleId', label: 'Rule ID'},
+            { field: 'activityTypeId', label: 'Activity Type ID'},
+            { field: 'associatedCompanyId', label: 'Associated Company ID'},
+            { field: 'serviceId', label: 'Service ID'},
+            { field: 'modalityId', label: 'Modality ID'},
+            { field: 'supplierCarId', label: 'Supplier Car ID'},
+            { field: 'cmdId', label: 'Cmd ID'},
+            { field: 'categoryId', label: 'Category ID'},
+            { field: 'cmdGdsId', label: 'Cmd Gds ID'},
+            { field: 'activityIntegrationId', label: 'Activity Integration ID'}
+        ]
 
         return (
                 <div>
@@ -73,62 +86,14 @@ class VoucherRuleOthersEdit extends Component {
                             <div className="col-md-1">&nbsp;</div>
                         </div>
 
-                        <Form onSubmit={this.handleSubmit}>
-                            <FormGroup>
-                                <Label for="ruleId">Rule ID</Label>
-                                <Input type="text" name="ruleId" id="ruleId" value={item.ruleId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
+                        <VoucherItemForm
+                            entityName="voucherRulesOthers"
+                            item={item}
+                            columns={columns}
+                            handleChange={this.handleChange}
+                            handleSubmit={this.handleSubmit}
+                        />
 
-                            <FormGroup>
-                                <Label for="activityTypeId">Activity type ID</Label>
-                                <Input type="text" name="activityTypeId" id="activityTypeId" value={item.activityTypeId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="associatedCompanyId">Associated Company Id</Label>
-                                <Input type="text" name="associatedCompanyId" id="associatedCompanyId" value={item.associatedCompanyId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="serviceId">Service ID</Label>
-                                <Input type="text" name="serviceId" id="serviceId" value={item.serviceId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="modalityId">Modality ID</Label>
-                                <Input type="text" name="modalityId" id="modalityId" value={item.modalityId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="supplierCarId">Supplier Car ID</Label>
-                                <Input type="text" name="supplierCarId" id="supplierCarId" value={item.supplierCarId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="cmdId">CMD ID</Label>
-                                <Input type="text" name="cmdId" id="cmdId" value={item.cmdId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="categoryId">Category ID</Label>
-                                <Input type="text" name="categoryId" id="categoryId" value={item.categoryId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="cmdGdsId">Cmd Gds ID</Label>
-                                <Input type="text" name="cmdGdsId" id="cmdGdsId" value={item.cmdGdsId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label for="activityIntegrationId">Activity Integration ID</Label>
-                                <Input type="text" name="activityIntegrationId" id="activityIntegrationId" value={item.activityIntegrationId || ''} onChange={this.handleChange}/>
-                            </FormGroup>
-
-                            <FormGroup className="submit-line">
-                                <Button color="primary" type="submit">Save</Button>{' '}
-                                <Button color="secondary" tag={Link} to="/voucherRulesOthers">Cancel</Button>
-                            </FormGroup>
-                        </Form>
                     </Container>
                 </div>
         );
