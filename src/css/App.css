@@ -37,10 +37,6 @@
   }
 }
 
-.x-small-text {
-  font-size: 0.65em;
-}
-
 .navbar-brand {
   border-right: 1px solid white;
   padding-right: 0.25em;
@@ -97,4 +93,15 @@ textarea.form-control {
 
 textarea.form-control.compact-text {
   font-size: x-small;
+}
+
+.table-condensed tr , .table-condensed td{
+  padding: 2px 4px !important;
+  font-size: smaller;
+  vertical-align: middle;
+}
+
+.x-small-text {
+  font-size: x-small !important;
+  white-space: nowrap;
 }
