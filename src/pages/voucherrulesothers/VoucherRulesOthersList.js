@@ -3,44 +3,23 @@ import {Button, Container} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import PaginatedTable from "../../components/PaginatedTable";
-import ItemActions from "../../components/ItemActions";
 
 const VoucherRulesOthersList = () => {
     const columns = [
         { label: "Actions"},
-        { label: "#Id"},
-        { label: "RuleId"},
-        { label: "Activity TypeId"},
-        { label: "AssociatedCompanyId"},
-        { label: "ServiceId"},
-        { label: "ModalityId"},
-        { label: "SupplierCarId"},
-        { label: "CmdId"},
-        { label: "CategoryId"},
-        { label: "CmdGdsId"},
-        { label: "Activity IntegrationId"},
+        { field: 'otherRuleId', label: "#Id"},
+        { field: 'ruleId', label: "RuleId"},
+        { field: 'activityTypeId', label: "Activity TypeId"},
+        { field: 'associatedCompanyId', label: "AssociatedCompanyId"},
+        { field: 'serviceId', label: "ServiceId"},
+        { field: 'modalityId', label: "ModalityId"},
+        { field: 'supplierCarId', label: "SupplierCarId"},
+        { field: 'cmdId', label: "CmdId"},
+        { field: 'categoryId', label: "CategoryId"},
+        { field: 'cmdGdsId', label: "CmdGdsId"},
+        { field: 'activityIntegrationId', label: "Activity IntegrationId"},
     ];
-    const renderRow = (voucherRuleOther) => (
-        <tr key={voucherRuleOther.otherRuleId}>
-            <td>
-                <ItemActions
-                    urlPath="/voucherRulesOthers"
-                    itemId={voucherRuleOther.otherRuleId}
-                />
-            </td>
-            <td style={{whiteSpace: 'nowrap'}}>{voucherRuleOther.otherRuleId}</td>
-            <td>{voucherRuleOther.ruleId}</td>
-            <td>{voucherRuleOther.activityTypeId}</td>
-            <td>{voucherRuleOther.associatedCompanyId}</td>
-            <td>{voucherRuleOther.serviceId}</td>
-            <td>{voucherRuleOther.modalityId}</td>
-            <td>{voucherRuleOther.supplierCarId}</td>
-            <td>{voucherRuleOther.cmdId}</td>
-            <td>{voucherRuleOther.categoryId}</td>
-            <td>{voucherRuleOther.cmdGdsId}</td>
-            <td>{voucherRuleOther.activityIntegrationId}</td>
-        </tr>
-    );
+
     return (
         <div>
             <AppNavbar/>
@@ -51,8 +30,9 @@ const VoucherRulesOthersList = () => {
                     <div className="col-md-1">&nbsp;</div>
                 </div>
                 <PaginatedTable
+                    keyField="otherRuleId"
+                    basePath="/voucherRulesOthers"
                     columns={columns}
-                    renderRow={renderRow}
                     dataObjectName="vouplaVoucherRulesOthers"
                 />
             </Container>

@@ -3,28 +3,15 @@ import {Button, Container} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import PaginatedTable from "../../components/PaginatedTable";
-import ItemActions from "../../components/ItemActions";
 
 const VoucherTemplateFilesList = () => {
     const columns = [
-        { label: "Actions"},
-        { label: "#Id"},
-        { label: "Template ID"},
-        { label: "Format out"},
+        { label: "Actions", width: '5%'},
+        { field: 'idTempFile', label: "#Id"},
+        { field: 'templateId', label: "Template ID"},
+        { field: 'formatOut', label: "Format out"},
     ];
-    const renderRow = (voucherTemplateFile) => (
-        <tr key={voucherTemplateFile.otherRuleId}>
-            <td>
-                <ItemActions
-                    urlPath="/voucherTemplateFiles"
-                    itemId={voucherTemplateFile.idTempFile}
-                />
-            </td>
-            <td style={{whiteSpace: 'nowrap'}}>{voucherTemplateFile.idTempFile}</td>
-            <td>{voucherTemplateFile.templateId}</td>
-            <td>{voucherTemplateFile.formatOut}</td>
-        </tr>
-    );
+
     return (
         <div>
             <AppNavbar/>
@@ -35,8 +22,9 @@ const VoucherTemplateFilesList = () => {
                     <div className="col-md-1">&nbsp;</div>
                 </div>
                 <PaginatedTable
+                    keyField="idTempFile"
+                    basePath="/voucherTemplateFiles"
                     columns={columns}
-                    renderRow={renderRow}
                     dataObjectName="vouplaVoucherTemplateFile"
                 />
             </Container>

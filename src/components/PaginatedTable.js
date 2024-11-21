@@ -1,11 +1,32 @@
 import React, {memo, useEffect, useState} from 'react';
 import {Button, Table} from 'reactstrap';
 import {FadeLoader} from 'react-spinners';
+import ItemActions from "./ItemActions";
 
-const PaginatedTable = memo(({ columns, renderRow, dataObjectName }) => {
+const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) => {
     const [data, setData] = useState([]);
     const [pagination, setPagination] = useState({ self: 0, next: 0, last: 0 });
     const [isLoading, setIsLoading] = useState(false);
+
+    const noTransform = (x) => x;
+
+    const renderRow = (listItem, keyField, basePath, columns) => (
+        <tr key={listItem[keyField]}>
+            <td>
+                <ItemActions
+                    urlPath={basePath}
+                    itemId={listItem[keyField]}
+                />
+            </td>
+            {columns.filter((col) => !!col.field).map((col, idx) => {
+                const adapter = col.adapter || noTransform;
+                return (
+                    <td width={col.width} className={col.className}>{adapter(listItem[col.field])}</td>
+                )
+            })}
+        </tr>
+    );
+
     const loadPage = async (page) => {
         setIsLoading(true);
         try {
@@ -57,7 +78,7 @@ const PaginatedTable = memo(({ columns, renderRow, dataObjectName }) => {
                 </tr>
                 </thead>
                 <tbody>
-                {data.map(renderRow)}
+                {data.map((item, idx) => {return renderRow(item, keyField, basePath, columns)})}
                 </tbody>
             </Table>
         </div>

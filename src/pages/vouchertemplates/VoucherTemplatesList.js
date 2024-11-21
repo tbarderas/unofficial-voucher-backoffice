@@ -3,38 +3,20 @@ import {Button, Container} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import PaginatedTable from "../../components/PaginatedTable";
-import ItemActions from "../../components/ItemActions";
 
 const VoucherTemplatesList = () => {
     const columns = [
         { label: "Actions"},
-        { label: "#Id"},
-        { label: "Status"},
-        { label: "Template name"},
-        { label: "Description"},
-        { label: "Format type T"},
-        { label: "Format type"},
-        { label: "Language code"},
-        { label: "Output format"},
+        { field: 'templateId', label: "#Id"},
+        { field: 'status', label: "Status"},
+        { field: 'templateName', label: "Template name"},
+        { field: 'description', label: "Description"},
+        { field: 'formatTypeT', label: "Format type T"},
+        { field: 'formatType', label: "Format type"},
+        { field: 'languageCode', label: "Language code"},
+        { field: 'outputFormat', label: "Output format"},
     ];
-    const renderRow = (voucherTemplate) => (
-        <tr key={voucherTemplate.ruleId}>
-            <td>
-                <ItemActions
-                    urlPath="/voucherTemplates"
-                    itemId={voucherTemplate.templateId}
-                />
-            </td>
-            <td style={{whiteSpace: 'nowrap'}}>{voucherTemplate.templateId}</td>
-            <td>{voucherTemplate.status}</td>
-            <td>{voucherTemplate.templateName}</td>
-            <td>{voucherTemplate.description}</td>
-            <td>{voucherTemplate.formatTypeT}</td>
-            <td>{voucherTemplate.formatType}</td>
-            <td>{voucherTemplate.languageCode}</td>
-            <td>{voucherTemplate.outputFormat}</td>
-        </tr>
-    );
+
     return (
         <div>
             <AppNavbar/>
@@ -45,8 +27,9 @@ const VoucherTemplatesList = () => {
                     <div className="col-md-1">&nbsp;</div>
                 </div>
                 <PaginatedTable
+                    keyField="templateId"
+                    basePath="/voucherTemplates"
                     columns={columns}
-                    renderRow={renderRow}
                     dataObjectName="vouplaVoucherTemplate"
                 />
             </Container>

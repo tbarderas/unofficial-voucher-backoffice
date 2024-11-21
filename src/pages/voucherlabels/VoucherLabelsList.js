@@ -3,34 +3,18 @@ import {Button, Container} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import PaginatedTable from "../../components/PaginatedTable";
-import ItemActions from "../../components/ItemActions";
 
 const VoucherLabelsList = () => {
     const columns = [
         { label: "Actions"},
-        { label: "#Id"},
-        { label: "Template ID"},
-        { label: "Label name"},
-        { label: "Domain"},
-        { label: "Language Code"},
-        { label: "Text"},
+        { field: 'labelId', label: "#Id"},
+        { field: 'templateId', label: "Template ID"},
+        { field: 'labelName', label: "Label name"},
+        { field: 'domain', label: "Domain"},
+        { field: 'languageCode', label: "Language Code"},
+        { field: 'text', label: "Text"},
     ];
-    const renderRow = (voucherLabel) => (
-        <tr key={voucherLabel.otherRuleId}>
-            <td>
-                <ItemActions
-                    urlPath="/voucherLabels"
-                    itemId={voucherLabel.labelId}
-                />
-            </td>
-            <td style={{whiteSpace: 'nowrap'}}>{voucherLabel.labelId}</td>
-            <td>{voucherLabel.templateId}</td>
-            <td>{voucherLabel.labelName}</td>
-            <td>{voucherLabel.domain}</td>
-            <td>{voucherLabel.languageCode}</td>
-            <td>{voucherLabel.text}</td>
-        </tr>
-    );
+
     return (
         <div>
             <AppNavbar/>
@@ -41,8 +25,9 @@ const VoucherLabelsList = () => {
                     <div className="col-md-1">&nbsp;</div>
                 </div>
                 <PaginatedTable
+                    keyField="labelId"
+                    basePath="/voucherLabels"
                     columns={columns}
-                    renderRow={renderRow}
                     dataObjectName="vouplaTemplateLabel"
                 />
             </Container>
