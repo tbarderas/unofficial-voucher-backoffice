@@ -41,18 +41,6 @@
   font-size: 0.65em;
 }
 
-.page-title .btn {
-  border-style: outset;
-  border-width: 0.5em;
-  font-weight: bold;
-}
-
-.page-title .btn:hover {
-  border-style: inset;
-  border-width: 0.5em;
-  text-decoration: underline;
-}
-
 .navbar-brand {
   border-right: 1px solid white;
   padding-right: 0.25em;

@@ -67,7 +67,6 @@ class voucherTemplateEdit extends Component {
                     <Container>
                         <div className="row mt-4 page-title">
                             <h3 className="col-md-8">{title}</h3>
-                            <Button color="warning" tag={Link} to="/voucherTemplates" className="col-md-3">Back to list</Button>
                             <div className="col-md-1">&nbsp;</div>
                         </div>
 
