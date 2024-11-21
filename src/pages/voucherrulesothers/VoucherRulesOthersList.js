@@ -5,7 +5,7 @@ import AppNavbar from "../../components/AppNavBar";
 import PaginatedTable from "../../components/PaginatedTable";
 import ItemActions from "../../components/ItemActions";
 
-const VoucherRulesList = () => {
+const VoucherRulesOthersList = () => {
     const columns = [
         { label: "Actions"},
         { label: "#Id"},
@@ -59,4 +59,4 @@ const VoucherRulesList = () => {
         </div>
     );
 };
-export default VoucherRulesList;
+export default VoucherRulesOthersList;
