@@ -56,11 +56,11 @@
 .form-group label {
   float: left;
   padding: 5px;
-  min-width: 15%;
+  width: 25%;
 }
 
 .form-group .form-control {
-  width: 85%;
+  width: 75%;
   max-width: 85% !important;
 }
 

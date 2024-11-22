@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import {Container} from "reactstrap";
-import VoucherItemForm from "../../components/VoucherItemForm";
+import {mapBooleanToRadioOption, VoucherItemForm} from "../../components/VoucherItemForm";
 
 class VoucherRuleEdit extends Component {
 
@@ -39,13 +39,16 @@ class VoucherRuleEdit extends Component {
     }
 
     async componentDidMount() {
+
         if (this.props.match.params.id !== 'new') {
             const voucherRule = await (await fetch(`/vouplaVoucherRules/${this.props.match.params.id}`)).json();
+            voucherRule['isActiveChecked'] = mapBooleanToRadioOption(voucherRule.isActive);
+            voucherRule['isGeneralChecked'] = mapBooleanToRadioOption(voucherRule.isGeneral)
             this.setState({item: voucherRule});
         }
     }
 
-    handleChange(event) {
+    handleChange(event, index = 0) {
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -53,6 +56,9 @@ class VoucherRuleEdit extends Component {
         let item = this.state.item;
         item[name] = value;
 
+        if (name.startsWith('is')) {
+            item[name + 'Checked'] = index
+        }
         this.setState({item});
     }
 
@@ -76,8 +82,12 @@ class VoucherRuleEdit extends Component {
         const {item} = this.state;
         const title = <h2>{item.ruleId ? 'Editing VoucherRule #' + item.ruleId : 'Adding VoucherRule'}</h2>;
         const columns = [
-            { field: 'isActive', label: 'isActive'},
-            { field: 'isGeneral', label: 'isGeneral'},
+            { field: 'isActive', label: 'isActive', type: 'radio', values: [
+                { label: 'YES', value: true}, { label: 'NO', value: false}
+                ]},
+            { field: 'isGeneral', label: 'isGeneral', type: 'radio', values: [
+                    { label: 'YES', value: true}, { label: 'NO', value: false}
+                ]},
             { field: 'temporaryId', label: 'temporaryId'},
             { field: 'application', label: 'application'},
             { field: 'webpageId', label: 'webpageId'},

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import {Container} from "reactstrap";
-import VoucherItemForm from "../../components/VoucherItemForm";
+import {VoucherItemForm} from "../../components/VoucherItemForm";
 
 class VoucherRuleOthersEdit extends Component {
 
