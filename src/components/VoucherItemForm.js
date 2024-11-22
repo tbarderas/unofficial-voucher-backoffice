@@ -9,12 +9,12 @@ const VoucherItemForm = memo(({ entityName, item, columns, handleChange, handleS
         <div>
             <Form onSubmit={handleSubmit}>
                 {columns.map((col, idx) => {
-                    const valueRender = col.valueRender || noTransform;
+                    const valueAdapter = col.adapter || noTransform;
                     return (
                         <FormGroup className={col.className || ''}>
                             <Label for={col.field}>{col.label}</Label>
                             <Input type={col.type || 'text'} name={col.field} id={col.field}
-                                   value={item[col.field] ? valueRender(item[col.field]) : ''}
+                                   value={item[col.field] ? valueAdapter(item[col.field]) : ''}
                                    rows={col.rows || ''}
                                    className={col.inputClass || ''}
                                    onChange={handleChange}/>

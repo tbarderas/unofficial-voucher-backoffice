@@ -65,12 +65,12 @@ class VoucherTemplateFileEdit extends Component {
             {
                 field: 'tempSourceT', label: 'Temp SourceT',
                 className: "col-md-6 half-column", type: 'textarea', rows: 25,
-                inputClass: 'compact-text', valueRender: atob
+                inputClass: 'compact-text', adapter: atob
             },
             {
                 field: 'tempSource', label: 'Temp Source',
                 className: "col-md-6 half-column", type: 'textarea', rows: 25,
-                inputClass: 'compact-text', valueRender: atob
+                inputClass: 'compact-text', adapter: atob
             }
         ]
 
