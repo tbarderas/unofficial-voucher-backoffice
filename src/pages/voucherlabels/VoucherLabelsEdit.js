@@ -52,8 +52,16 @@ class VoucherLabelsEdit extends Component {
                 'Requested-By': 'vouchers-local-backoffice'
             },
             body: JSON.stringify(item),
+        }).then((response) => {
+            if (!response.ok) {
+                response.json().then((json) => {
+                    console.log('Fail:' + json.message);
+                    alert('Cant add item: ' + json.message);
+                })
+            } else {
+                this.props.history.push('/voucherLabels');
+            }
         });
-        this.props.history.push('/voucherLabels');
     }
 
     render() {
