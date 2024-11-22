@@ -30,7 +30,7 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
     const loadPage = async (page) => {
         setIsLoading(true);
         try {
-            const response = await fetch(`/${dataObjectName}/search/customSearchWithFilter?sort=desc&page=${page}`);
+            const response = await fetch(`/${dataObjectName}/search/customSearchWithFilter?sort=${keyField},asc&page=${page}`);
             const result = await response.json();
             setData(result["_embedded"][dataObjectName] || []);
             setPagination({
