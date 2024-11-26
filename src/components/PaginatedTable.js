@@ -7,9 +7,9 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
     const [data, setData] = useState([]);
     const [pagination, setPagination] = useState({ self: 0, next: 0, last: 0 });
     const [isLoading, setIsLoading] = useState(false);
-
+    const [filteredData, setFilteredData] = useState([]);
+    const [filter, setFilter] = useState("");
     const noTransform = (x) => x;
-
     const renderRow = (listItem, keyField, basePath, columns) => (
         <tr key={listItem[keyField]}>
             <td>
@@ -26,18 +26,19 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
             })}
         </tr>
     );
-
     const loadPage = async (page) => {
         setIsLoading(true);
         try {
             const response = await fetch(`/${dataObjectName}/search/customSearchWithFilter?sort=${keyField},asc&page=${page}`);
             const result = await response.json();
-            setData(result["_embedded"][dataObjectName] || []);
+            const fetchedData = result["_embedded"][dataObjectName] || [];
+            setData(fetchedData);
             setPagination({
                 self: result["page"]["number"],
                 next: Math.min(result["page"]["number"] + 1, result["page"]["totalPages"] - 1),
                 last: result["page"]["totalPages"] - 1,
             });
+            setFilteredData(fetchedData);
         } catch (error) {
             console.error('Failed to load data:', error);
         } finally {
@@ -64,6 +65,19 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
         else if (direction >= 1 && direction <= pagination.last + 1) targetPage = direction - 1
         if (targetPage !== pagination.self) loadPage(targetPage).then((targetPage) => console.log('Page ' + targetPage + 'loaded'));
     };
+
+    const handleFilterChange = (event) => {
+        const value = event.target.value.toLowerCase();
+        setFilter(value);
+        setFilteredData(
+            data.filter((item) => {
+                return columns.some((col) => {
+                    const fieldValue = item[col.field]?.toString().toLowerCase() || "";
+                    return fieldValue.includes(value);
+                });
+            })
+        );
+    };
     if (isLoading) {
         return <div className="col-md-12 align-content-center"><FadeLoader /></div>;
     }
@@ -81,7 +95,11 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
                     <Input type="text" ref={goToPageInput} placeholder={"page to go"}/>
                     <Button color="info" onClick={goToPage} style={{whiteSpace: "nowrap"}}>Go to page</Button>
 
+                    <Input type="text" className={"ms-3"} placeholder={"Filter..."} onChange={handleFilterChange} value={filter}/>
+
                 </ButtonGroup>
+
+
             </div>
             <Table className="mt-4 table-condensed table-hover" striped bordered>
                 <thead>
@@ -92,7 +110,7 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
                 </tr>
                 </thead>
                 <tbody>
-                {data.map((item, idx) => {return renderRow(item, keyField, basePath, columns)})}
+                {filteredData.map((item) => renderRow(item, keyField, basePath, columns))}
                 </tbody>
             </Table>
         </div>
