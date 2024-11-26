@@ -15,6 +15,24 @@ export const updateDB = async (entity) => {
     });
 }
 
+export const utf8_to_b64 = (str) => {
+    try {
+        return btoa(unescape(encodeURIComponent(str)));
+    } catch (error) {
+        console.log('error encoding from utf8 to b64:' + error);
+        return str;
+    }
+}
+
+export const b64_to_utf8 = ( str ) => {
+    try {
+        return decodeURIComponent(escape(atob(str)));
+    } catch (error) {
+        console.log('error decoding from b64 to utf8:' + error);
+        return str;
+    }
+}
+
 export const VoucherItemForm = memo(({entityName, item, columns, handleChange, handleSubmit}) => {
     const noTransform = (x) => x;
 

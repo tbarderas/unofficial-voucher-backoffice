@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import {Container} from "reactstrap";
-import {updateDB, VoucherItemForm} from "../../components/VoucherItemForm";
+import {b64_to_utf8, updateDB, utf8_to_b64, VoucherItemForm} from "../../components/VoucherItemForm";
 
 class VoucherTemplateFileEdit extends Component {
 
@@ -34,10 +34,6 @@ class VoucherTemplateFileEdit extends Component {
         const target = event.target;
         const name = target.name;
         const b64encoded = name === 'tempSource' || name === 'tempSourceT';
-
-        function utf8_to_b64(str) {
-            return btoa(unescape(encodeURIComponent( str )));
-        }
 
         const value = b64encoded ? utf8_to_b64(target.value) : target.value;
         let item = this.state.item;
@@ -73,11 +69,6 @@ class VoucherTemplateFileEdit extends Component {
     render() {
         const {item} = this.state;
         const title = <h2>{item.idTempFile ? 'Editing voucherTemplateFile #' + item.idTempFile : 'Adding voucherTemplateFile'}</h2>;
-
-        function b64_to_utf8( str ) {
-            return decodeURIComponent(escape(atob( str )));
-        }
-
         const columns = [
             { field: 'templateId', label: 'Template ID'},
             { field: 'formatOut', label: 'Format Out'},
