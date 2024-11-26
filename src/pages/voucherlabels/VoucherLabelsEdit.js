@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import {Container} from "reactstrap";
-import {VoucherItemForm} from "../../components/VoucherItemForm";
+import {updateDB, VoucherItemForm} from "../../components/VoucherItemForm";
 
 class VoucherLabelsEdit extends Component {
 
@@ -56,9 +56,10 @@ class VoucherLabelsEdit extends Component {
             if (!response.ok) {
                 response.json().then((json) => {
                     console.log('Fail:' + json.message);
-                    alert('Cant add item: ' + json.message);
+                    alert('Cant save item: ' + json.message);
                 })
             } else {
+                updateDB('voupla-template-label');
                 this.props.history.push('/voucherLabels');
             }
         });

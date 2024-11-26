@@ -5,6 +5,16 @@ import {FormCheck} from "react-bootstrap";
 
 export const mapBooleanToRadioOption = (x) => x ? 0 : 1;
 
+export const updateDB = async (entity) => {
+    await fetch('http://voucher-db-loader.stage-hbg-aws-eu-central-1.service/1.0/jobs/' + entity + '/updateDB', {
+        method: 'GET',
+        mode: 'no-cors',
+        headers: {
+            'Accept': 'application/json'
+        }
+    });
+}
+
 export const VoucherItemForm = memo(({entityName, item, columns, handleChange, handleSubmit}) => {
     const noTransform = (x) => x;
 

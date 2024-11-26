@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import {Container} from "reactstrap";
-import {VoucherItemForm} from "../../components/VoucherItemForm";
+import {updateDB, VoucherItemForm} from "../../components/VoucherItemForm";
 
 class voucherTemplateEdit extends Component {
 
@@ -54,8 +54,17 @@ class voucherTemplateEdit extends Component {
                 'Requested-By': 'vouchers-local-backoffice'
             },
             body: JSON.stringify(item),
+        }).then((response) => {
+            if (!response.ok) {
+                response.json().then((json) => {
+                    console.log('Fail:' + json.message);
+                    alert('Cant save item: ' + json.message);
+                })
+            } else {
+                updateDB('voupla-voucher-template');
+                this.props.history.push('/voucherTemplates');
+            }
         });
-        this.props.history.push('/voucherTemplates');
     }
 
     render() {

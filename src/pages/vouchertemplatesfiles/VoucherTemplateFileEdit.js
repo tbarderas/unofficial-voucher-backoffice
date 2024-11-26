@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import {Container} from "reactstrap";
-import {VoucherItemForm} from "../../components/VoucherItemForm";
+import {updateDB, VoucherItemForm} from "../../components/VoucherItemForm";
 
 class VoucherTemplateFileEdit extends Component {
 
@@ -34,7 +34,12 @@ class VoucherTemplateFileEdit extends Component {
         const target = event.target;
         const name = target.name;
         const b64encoded = name === 'tempSource' || name === 'tempSourceT';
-        const value = b64encoded ? btoa(target.value) : target.value;
+
+        function utf8_to_b64(str) {
+            return btoa(unescape(encodeURIComponent( str )));
+        }
+
+        const value = b64encoded ? utf8_to_b64(target.value) : target.value;
         let item = this.state.item;
         item[name] = value;
         this.setState({item});
@@ -52,25 +57,39 @@ class VoucherTemplateFileEdit extends Component {
                 'Requested-By': 'vouchers-local-backoffice'
             },
             body: JSON.stringify(item),
+        }).then((response) => {
+            if (!response.ok) {
+                response.json().then((json) => {
+                    console.log('Fail:' + json.message);
+                    alert('Cant save item: ' + json.message);
+                })
+            } else {
+                updateDB('voupla-voucher-template-file');
+                this.props.history.push('/voucherTemplateFiles');
+            }
         });
-        this.props.history.push('/voucherTemplateFiles');
     }
 
     render() {
         const {item} = this.state;
         const title = <h2>{item.idTempFile ? 'Editing voucherTemplateFile #' + item.idTempFile : 'Adding voucherTemplateFile'}</h2>;
+
+        function b64_to_utf8( str ) {
+            return decodeURIComponent(escape(atob( str )));
+        }
+
         const columns = [
             { field: 'templateId', label: 'Template ID'},
             { field: 'formatOut', label: 'Format Out'},
             {
                 field: 'tempSourceT', label: 'Temp SourceT',
                 className: "col-md-6 half-column", type: 'textarea', rows: 25,
-                inputClass: 'compact-text', adapter: atob
+                inputClass: 'compact-text', adapter: b64_to_utf8
             },
             {
                 field: 'tempSource', label: 'Temp Source',
                 className: "col-md-6 half-column", type: 'textarea', rows: 25,
-                inputClass: 'compact-text', adapter: atob
+                inputClass: 'compact-text', adapter: b64_to_utf8
             }
         ]
 

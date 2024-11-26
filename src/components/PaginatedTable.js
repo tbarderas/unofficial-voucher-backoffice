@@ -74,7 +74,7 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
                     <Button outline color="dark" onClick={() => changePage('first')}>First</Button>
                     <Button outline color="dark" onClick={() => changePage('prev')} disabled={pagination.self === 0}>Prev.</Button>
                     <Button outline color="dark" disabled style={{whiteSpace: "nowrap"}}>Page {pagination.self + 1} of {pagination.last + 1}</Button>
-                    <Button outline color="dark" onClick={() => changePage('next')} disabled={pagination.next >= pagination.last}>Next</Button>
+                    <Button outline color="dark" onClick={() => changePage('next')} disabled={pagination.self === pagination.last}>Next</Button>
                     <Button outline color="dark" onClick={() => changePage('last')} disabled={pagination.self === pagination.last}>Last</Button>
 
                     <div className="col-md-1">&nbsp;</div>

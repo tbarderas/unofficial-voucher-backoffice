@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import AppNavbar from "../../components/AppNavBar";
 import {Container} from "reactstrap";
-import {mapBooleanToRadioOption, VoucherItemForm} from "../../components/VoucherItemForm";
+import {mapBooleanToRadioOption, updateDB, VoucherItemForm} from "../../components/VoucherItemForm";
 
 class VoucherRuleEdit extends Component {
 
@@ -74,8 +74,17 @@ class VoucherRuleEdit extends Component {
                 'Requested-By': 'vouchers-local-backoffice'
             },
             body: JSON.stringify(item),
+        }).then((response) => {
+            if (!response.ok) {
+                response.json().then((json) => {
+                    console.log('Fail:' + json.message);
+                    alert('Cant save item: ' + json.message);
+                })
+            } else {
+                updateDB('voupla-voucher-rule');
+                this.props.history.push('/voucherRules');
+            }
         });
-        this.props.history.push('/voucherRules');
     }
 
     render() {
