@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useRef, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Button, ButtonGroup, Input, Table} from 'reactstrap';
 import {FadeLoader} from 'react-spinners';
 import ItemActions from "./ItemActions";
@@ -9,6 +9,8 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
     const [isLoading, setIsLoading] = useState(false);
     const [filteredData, setFilteredData] = useState([]);
     const [filter, setFilter] = useState("");
+    const [pageToGo, setPageToGo] = useState('');
+
     const noTransform = (x) => x;
     const renderRow = (listItem, keyField, basePath, columns) => (
         <tr key={listItem[keyField]}>
@@ -39,6 +41,7 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
                 last: result["page"]["totalPages"] - 1,
             });
             setFilteredData(fetchedData);
+            console.log('Page ' + (page + 1) + ' loaded.');
         } catch (error) {
             console.error('Failed to load data:', error);
         } finally {
@@ -47,23 +50,33 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
     };
 
     useEffect(() => {
-        loadPage(0).then(r => console.log('Page 0 loaded')); // Initial load
+        loadPage(0)
+            .then(() => console.log("List for " + dataObjectName + " initiated."))
+            .catch((error) => console.log('Error on initial load:' + error)); // Initial load
     }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
-    const goToPageInput = useRef();
+    const handleGoToPageChange = (event) => {
+        setPageToGo(event.target.value);
+    }
 
-    const goToPage = () => {
-        changePage(goToPageInput.current.value);
+    const changeToPage = (event) => {
+        event.preventDefault();
+        console.log('Changing to page ' + pageToGo);
+        changePage(pageToGo);
     }
 
     const changePage = (direction) => {
         let targetPage = pagination.self;
-        if (direction === 'first') targetPage = 0;
-        else if (direction === 'prev') targetPage = Math.max(0, pagination.self - 1);
-        else if (direction === 'next') targetPage = Math.min(pagination.next, pagination.last);
-        else if (direction === 'last') targetPage = pagination.last;
-        else if (direction >= 1 && direction <= pagination.last + 1) targetPage = direction - 1
-        if (targetPage !== pagination.self) loadPage(targetPage).then((targetPage) => console.log('Page ' + targetPage + 'loaded'));
+        if (!isNaN(direction)) {
+            if (direction >= 1 && direction <= pagination.last + 1) targetPage = direction - 1
+        } else {
+            if (direction === 'first') targetPage = 0;
+            else if (direction === 'prev') targetPage = Math.max(0, pagination.self - 1);
+            else if (direction === 'next') targetPage = Math.min(pagination.next, pagination.last);
+            else if (direction === 'last') targetPage = pagination.last;
+        }
+
+        if (targetPage !== pagination.self) loadPage(targetPage).catch((error) => console.log('Error loading:' + error));
     };
 
     const handleFilterChange = (event) => {
@@ -92,10 +105,10 @@ const PaginatedTable = memo(({ keyField, basePath, columns, dataObjectName }) =>
                     <Button outline color="dark" onClick={() => changePage('last')} disabled={pagination.self === pagination.last}>Last</Button>
 
                     <div className="col-md-1">&nbsp;</div>
-                    <Input type="text" ref={goToPageInput} placeholder={"page to go"}/>
-                    <Button color="info" onClick={goToPage} style={{whiteSpace: "nowrap"}}>Go to page</Button>
+                    <Input type="text" onChange={handleGoToPageChange} placeholder={"page to go"}/>
+                    <Button color="info" onClick={changeToPage} style={{whiteSpace: "nowrap"}}>Go to page</Button>
 
-                    <Input type="text" className={"ms-3"} placeholder={"Filter..."} onChange={handleFilterChange} value={filter}/>
+                    <Input type="text" className={"ms-3"} placeholder={"Filter in page..."} onChange={handleFilterChange} value={filter}/>
 
                 </ButtonGroup>
 
